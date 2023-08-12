@@ -3,7 +3,7 @@ import * as videoController from "./videoController.js";
 import * as validators from "../../Middlewares/Validations/offersValidation.js";
 import { protectedRoutes } from "../../utils/ProtectedRoutes.js";
 import { validation } from "../../Middlewares/validation.js";
-import { uploadSingleVideo } from "../../utils/fileUpload.js";
+import { uploadSingleVideo } from "../../utils/FileUpload.js";
 import { allowedTo } from "../../utils/allowedTo.js";
 
 let router = express.Router();

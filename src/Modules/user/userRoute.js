@@ -1,7 +1,7 @@
 import express from "express";
 import * as userController from "./userController.js";
 import { protectedRoutes } from "../../utils/ProtectedRoutes.js";
-import { uploadSingleFile } from "../../utils/fileUpload.js";
+import { uploadSingleFile } from "../../utils/FileUpload.js";
 import requestRoute from "../request/requestRoute.js";
 let router = express.Router();
 router.patch(

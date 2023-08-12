@@ -3,7 +3,7 @@ import * as paymentController from "./paymentController.js";
 import * as validators from "../../Middlewares/Validations/paymentValidation.js";
 import { protectedRoutes } from "../../utils/ProtectedRoutes.js";
 import { validation } from "../../Middlewares/validation.js";
-import { uploadSingleFile } from "../../utils/fileUpload.js";
+import { uploadSingleFile } from "../../utils/FileUpload.js";
 import { allowedTo } from "../../utils/allowedTo.js";
 
 let router = express.Router();
