@@ -65,27 +65,21 @@ export const updateTopOffers = catchError(async (request, response, next) => {
     if (isFound) {
       return next(ErrorMessage(409, `title with this name already exists`));
     }
-    topOffer.title = title;
-  }
-  if (description) {
-    topOffer.description = description;
-  }
-  if (url) {
-    topOffer.url = url;
-  }
-  if (status) {
-    topOffer.status = status;
   }
   if (request.file) {
     await cloudinary.uploader.destroy(topOffer.image.public_id);
     let { public_id, secure_url } = await cloudinary.uploader.upload(
       request.file.path,
-      {
-        folder: "Luke-App/Payment-Images",
-      }
+      { folder: "Luke-App/Top-Offers" }
     );
+
     topOffer.image = { public_id, secure_url };
   }
+  if (title) topOffer.title = title;
+  if (description) topOffer.description = description;
+  if (url) topOffer.url = url;
+  if (status) topOffer.status = status;
+
   await topOffer.save();
   response.status(200).json({
     message: "top offer updated successfully",
@@ -98,37 +92,31 @@ export const updateOffersWall = catchError(async (request, response, next) => {
   const { id } = request.params;
   let offerWall = await offersModel.findById(id);
   if (!offerWall) {
-    return next(ErrorMessage(404, "Payment way not found"));
+    return next(ErrorMessage(404, "Offer wall not found"));
   }
   if (title) {
     let isFound = await offersModel.findOne({ title });
     if (isFound) {
-      return next(ErrorMessage(409, `title with this name already exists`));
+      return next(
+        ErrorMessage(409, `Offer wall with this title already exists`)
+      );
     }
-    offerWall.title = title;
-  }
-  if (description) {
-    offerWall.description = description;
-  }
-  if (url) {
-    offerWall.url = url;
-  }
-  if (status) {
-    offerWall.status = status;
   }
   if (request.file) {
     await cloudinary.uploader.destroy(offerWall.image.public_id);
     let { public_id, secure_url } = await cloudinary.uploader.upload(
       request.file.path,
-      {
-        folder: "Luke-App/Payment-Images",
-      }
+      { folder: "Luke-App/Offers-Wall" }
     );
     offerWall.image = { public_id, secure_url };
   }
+  if (title) offerWall.title = title;
+  if (description) offerWall.description = description;
+  if (url) offerWall.url = url;
+  if (status) offerWall.status = status;
   await offerWall.save();
   response.status(200).json({
-    message: "top offer updated successfully",
+    message: "Offer wall updated successfully",
     result: offerWall,
   });
 });
