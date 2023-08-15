@@ -4,6 +4,7 @@ import { protectedRoutes } from "../../utils/ProtectedRoutes.js";
 import { uploadSingleFile } from "../../utils/FileUpload.js";
 import requestRoute from "../request/requestRoute.js";
 let router = express.Router();
+router.get("/:id", userController.getUser);
 router.patch(
   "/edit-profile-image",
   uploadSingleFile("profilePic"),

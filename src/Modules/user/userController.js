@@ -53,3 +53,12 @@ export const resetPassword = catchError(async (request, response, next) => {
     user,
   });
 });
+
+export const getUser = catchError(async (request, response, next) => {
+  const { id } = request.params;
+  let user = await userModel.findById(id);
+  if (!user) return next(ErrorMessage(404, `Not Found`));
+  response.status(200).json({
+    user,
+  });
+});

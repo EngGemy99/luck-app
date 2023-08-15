@@ -11,7 +11,11 @@ let router = express.Router();
 //! to get all payment way
 router
   .route("/")
-  .get(protectedRoutes, allowedTo("admin"), paymentController.getAllPayment);
+  .get(
+    protectedRoutes,
+    allowedTo("admin", "user"),
+    paymentController.getAllPayment
+  );
 
 //! to add a new payment way
 router
