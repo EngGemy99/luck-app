@@ -21,6 +21,10 @@ export const register = catchError(async (request, response, next) => {
 export const login = catchError(async (request, response, next) => {
   const { userName, password } = request.body;
   let isFound = await userModel.findOne({ userName });
+
+  if (isFound?.status == "blocked")
+    return next(ErrorMessage(400, "you are not allowed to login "));
+
   const match = await bcrypt.compare(password, isFound ? isFound.password : "");
   if (isFound && match) {
     let token = jwt.sign(

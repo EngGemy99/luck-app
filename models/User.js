@@ -22,7 +22,7 @@ const userSchema = mongoose.Schema(
     },
     profilePic: {
       type: Object,
-      default: {},
+      default: { public_id: "", secure_url: "" },
     },
     role: {
       type: String,
