@@ -16,6 +16,14 @@ export const profile = catchError(async (request, response, next) => {
 
 export const editProfilePic = catchError(async (request, response, next) => {
   let { _id } = request.user;
+
+  let user = await userModel.findById(_id);
+  if (!user) return next(ErrorMessage(404, `Not Found`));
+
+  if (user.profilePic.public_id != "") {
+    await cloudinary.uploader.destroy(user.profilePic.public_id);
+  }
+
   let { public_id, secure_url } = await cloudinary.uploader.upload(
     request.file.path,
     { folder: "Luke-App/Profile-Images" }

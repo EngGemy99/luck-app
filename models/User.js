@@ -22,7 +22,11 @@ const userSchema = mongoose.Schema(
     },
     profilePic: {
       type: Object,
-      default: { public_id: "", secure_url: "" },
+      default: {
+        public_id: "",
+        secure_url:
+          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRDtd0soCSRdpo8Y5klekJdABh4emG2P29jwg&usqp=CAU",
+      },
     },
     role: {
       type: String,
