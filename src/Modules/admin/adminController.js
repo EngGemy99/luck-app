@@ -2,6 +2,7 @@ import { ErrorMessage } from "../../utils/ErrorMessage.js";
 import { catchError } from "../../utils/catchAsyncError.js";
 import { userModel } from "../../../models/User.js";
 import cloudinary from "../../utils/cloudinary.js";
+import { requestModel } from "../../../models/Request.js";
 
 export const profile = catchError(async (request, response, next) => {
   let { _id } = request.user;
@@ -57,6 +58,7 @@ export const deleteUser = catchError(async (request, response, next) => {
   if (!result) {
     return next(ErrorMessage(404, `user Not Found`));
   }
+  await requestModel.deleteMany({ user: id });
   response.status(200).json({
     message: "Delete Successfully",
   });

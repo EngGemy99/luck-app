@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 import bcrypt from "bcrypt";
+import { requestModel } from "./Request.js";
 const userSchema = mongoose.Schema(
   {
     userName: {
@@ -52,6 +53,7 @@ userSchema.pre("save", function (next) {
   }
   next();
 });
+
 userSchema.virtual("previous-requests", {
   ref: "Request",
   localField: "_id",
