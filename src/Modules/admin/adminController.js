@@ -12,6 +12,7 @@ export const profile = catchError(async (request, response, next) => {
   }
   response.status(200).json({
     userProfile,
+    status: 200,
   });
 });
 
@@ -19,6 +20,7 @@ export const allUser = catchError(async (request, response, next) => {
   let users = await userModel.find({});
   response.status(200).json({
     users,
+    status: 200,
   });
 });
 
@@ -34,6 +36,7 @@ export const editUserPoint = catchError(async (request, response, next) => {
   response.status(200).json({
     message: "edit point successfully",
     user,
+    status: 200,
   });
 });
 
@@ -50,8 +53,10 @@ export const editStatusUser = catchError(async (request, response, next) => {
   response.status(200).json({
     message: "edit status successfully",
     user,
+    status: 200,
   });
 });
+
 export const deleteUser = catchError(async (request, response, next) => {
   let { id } = request.params;
   let result = await userModel.findByIdAndDelete(id);
@@ -61,6 +66,7 @@ export const deleteUser = catchError(async (request, response, next) => {
   await requestModel.deleteMany({ user: id });
   response.status(200).json({
     message: "Delete Successfully",
+    status: 200,
   });
 });
 
@@ -92,5 +98,6 @@ export const updateProfile = catchError(async (request, response, next) => {
   response.status(200).json({
     message: "admin profile updated successfully",
     result: user,
+    status: 200,
   });
 });

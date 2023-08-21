@@ -11,6 +11,7 @@ export const profile = catchError(async (request, response, next) => {
   }
   response.status(200).json({
     userProfile,
+    status: 200,
   });
 });
 
@@ -38,6 +39,7 @@ export const editProfilePic = catchError(async (request, response, next) => {
   response.status(200).json({
     message: "Done",
     result,
+    status: 200,
   });
 });
 
@@ -49,6 +51,7 @@ export const forgotPassword = catchError(async (request, response, next) => {
   }
   response.status(200).json({
     message: "User exists",
+    status: 200,
   });
 });
 export const resetPassword = catchError(async (request, response, next) => {
@@ -59,6 +62,7 @@ export const resetPassword = catchError(async (request, response, next) => {
   response.status(200).json({
     message: "password updated successfully",
     user,
+    status: 200,
   });
 });
 
@@ -68,5 +72,6 @@ export const getUser = catchError(async (request, response, next) => {
   if (!user) return next(ErrorMessage(404, `Not Found`));
   response.status(200).json({
     user,
+    status: 200,
   });
 });

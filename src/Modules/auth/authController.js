@@ -13,9 +13,10 @@ export const register = catchError(async (request, response, next) => {
     return next(ErrorMessage(409, " email or userName already exists"));
 
   let user = await userModel.create(request.body);
-  response.status(200).json({
+  response.status(201).json({
     message: "Done 👌",
     user,
+    status: 201,
   });
 });
 export const login = catchError(async (request, response, next) => {
@@ -37,6 +38,7 @@ export const login = catchError(async (request, response, next) => {
     return response.status(200).json({
       message: "Done ",
       token,
+      status: 200,
     });
   }
   next(ErrorMessage(401, "Incorrect userName Or Password 🙄"));

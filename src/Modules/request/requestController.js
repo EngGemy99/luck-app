@@ -9,6 +9,7 @@ export const withdrawalRequest = catchError(async (request, response, next) => {
   response.status(200).json({
     message: "waiting for admin approval",
     newRequest,
+    status: 200,
   });
 });
 export const allRequest = catchError(async (request, response, next) => {
@@ -23,6 +24,7 @@ export const allRequest = catchError(async (request, response, next) => {
   let requests = await apiFeature.mongooseQuery;
   response.status(200).json({
     requests,
+    status: 200,
   });
 });
 
@@ -36,9 +38,10 @@ export const acceptedOrCancelRequest = catchError(
       },
       { new: true }
     );
-    response.status(201).json({
+    response.status(200).json({
       message: "request updated successfully",
       updateRequest,
+      status: 200,
     });
   }
 );

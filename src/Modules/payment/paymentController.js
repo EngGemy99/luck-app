@@ -7,6 +7,7 @@ export const getAllPayment = catchError(async (request, response, next) => {
   let paymentWays = await paymentModel.find();
   response.status(200).json({
     paymentWays,
+    status: 200,
   });
 });
 export const addPaymentWay = catchError(async (request, response, next) => {
@@ -23,9 +24,10 @@ export const addPaymentWay = catchError(async (request, response, next) => {
     image: { public_id, secure_url },
   });
 
-  response.status(200).json({
+  response.status(201).json({
     message: "Done",
     result,
+    status: 201,
   });
 });
 
@@ -64,5 +66,6 @@ export const updatePaymentWay = catchError(async (request, response, next) => {
   response.status(200).json({
     message: "Payment way updated successfully",
     result: paymentWay,
+    status: 200,
   });
 });

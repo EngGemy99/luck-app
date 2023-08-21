@@ -10,6 +10,7 @@ export const allVideo = catchError(async (request, response, next) => {
   let videos = await apiFeature.mongooseQuery;
   response.status(200).json({
     videos,
+    status: 200,
   });
 });
 export const addVideo = catchError(async (request, response, next) => {
@@ -27,9 +28,10 @@ export const addVideo = catchError(async (request, response, next) => {
   if (!secure_url) return next(ErrorMessage(400, `Video upload failed`));
   request.body.video = { public_id, secure_url };
   let newVideo = await videoModel.create(request.body);
-  response.status(200).json({
+  response.status(201).json({
     message: "Success",
     newVideo,
+    status: 201,
   });
 });
 
@@ -67,5 +69,6 @@ export const updateVideo = catchError(async (request, response, next) => {
   response.status(200).json({
     message: "video updated successfully",
     result: video,
+    status: 200,
   });
 });

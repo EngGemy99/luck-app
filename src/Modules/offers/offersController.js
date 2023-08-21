@@ -7,12 +7,14 @@ export const topOffers = catchError(async (request, response, next) => {
   let result = await offersModel.find({ offerType: "topOffer" });
   response.status(200).json({
     result,
+    status: 200,
   });
 });
 export const offersWall = catchError(async (request, response, next) => {
   let result = await offersModel.find({ offerType: "offersWall" });
   response.status(200).json({
     result,
+    status: 200,
   });
 });
 
@@ -28,9 +30,10 @@ export const addTopOffers = catchError(async (request, response, next) => {
   );
   request.body.image = { public_id, secure_url };
   let newTopOffer = await offersModel.create(request.body);
-  response.status(200).json({
+  response.status(201).json({
     message: "added successfully",
     newTopOffer,
+    status: 201,
   });
 });
 
@@ -47,9 +50,10 @@ export const addOffersWall = catchError(async (request, response, next) => {
   );
   request.body.image = { public_id, secure_url };
   let newOfferWall = await offersModel.create(request.body);
-  response.status(200).json({
+  response.status(201).json({
     message: "added successfully",
     newOfferWall,
+    status: 201,
   });
 });
 
@@ -84,6 +88,7 @@ export const updateTopOffers = catchError(async (request, response, next) => {
   response.status(200).json({
     message: "top offer updated successfully",
     result: topOffer,
+    status: 200,
   });
 });
 
@@ -118,5 +123,6 @@ export const updateOffersWall = catchError(async (request, response, next) => {
   response.status(200).json({
     message: "Offer wall updated successfully",
     result: offerWall,
+    status: 200,
   });
 });
