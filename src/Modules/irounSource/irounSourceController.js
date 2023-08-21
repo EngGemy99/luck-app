@@ -3,9 +3,9 @@ import { ErrorMessage } from "../../utils/ErrorMessage.js";
 import { catchError } from "../../utils/catchAsyncError.js";
 
 export const getAll = catchError(async (request, response, next) => {
-  let tabJoy = await irounSourceModel.find();
+  let irounSource = await irounSourceModel.find();
   response.status(200).json({
-    tabJoy,
+    irounSource,
   });
 });
 export const addIrounSource = catchError(async (request, response, next) => {

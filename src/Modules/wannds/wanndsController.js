@@ -1,15 +1,15 @@
-import { tabJoyModel } from "../../../models/TabJoy.js";
+import { wanndsModel } from "../../../models/Wannds.js";
 import { ErrorMessage } from "../../utils/ErrorMessage.js";
 import { catchError } from "../../utils/catchAsyncError.js";
 
 export const getAll = catchError(async (request, response, next) => {
-  let tabJoy = await tabJoyModel.find();
+  let wannds = await wanndsModel.find();
   response.status(200).json({
-    tabJoy,
+    wannds,
   });
 });
 export const addWannds = catchError(async (request, response, next) => {
-  await tabJoyModel.create(request.body);
+  await wanndsModel.create(request.body);
   response.status(200).json({
     message: "Added Successfully",
     status: 200,
