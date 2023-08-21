@@ -1,6 +1,5 @@
 import mongoose from "mongoose";
 import bcrypt from "bcrypt";
-import { requestModel } from "./Request.js";
 const userSchema = mongoose.Schema(
   {
     userName: {
