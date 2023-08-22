@@ -26,6 +26,10 @@ const offersSchema = mongoose.Schema(
       default: "topOffer",
       enum: ["topOffer", "offersWall"],
     },
+    point: {
+      type: Number,
+      default: 0,
+    },
   },
   { timestamps: true }
 );
