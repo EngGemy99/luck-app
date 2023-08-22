@@ -85,7 +85,9 @@ export const updateProfile = catchError(async (request, response, next) => {
     user.userName = userName;
   }
   if (request.file) {
-    await cloudinary.uploader.destroy(user.profilePic.public_id);
+    if (user.profilePic.public_id) {
+      await cloudinary.uploader.destroy(user.profilePic.public_id);
+    }
     let { public_id, secure_url } = await cloudinary.uploader.upload(
       request.file.path,
       {
