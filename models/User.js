@@ -7,6 +7,7 @@ const userSchema = mongoose.Schema(
       trim: true,
       required: true,
       minLength: [1, "too short user name"],
+      unique: [true, "userName must be unique"],
     },
     email: {
       type: String,
