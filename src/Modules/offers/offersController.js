@@ -50,6 +50,7 @@ export const addOffersWall = catchError(async (request, response, next) => {
   );
   request.body.image = { public_id, secure_url };
   let newOfferWall = await offersModel.create(request.body);
+
   response.status(201).json({
     message: "added successfully",
     newOfferWall,
