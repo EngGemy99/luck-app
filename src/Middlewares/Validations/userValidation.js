@@ -5,7 +5,7 @@ export const editUserPoint = Joi.object({
     .length(24)
     .pattern(/^[0-9a-fA-F]{24}$/)
     .required(),
-  pointsChange: Joi.number().min(1).required(),
+  pointsChange: Joi.number().required(),
 });
 export const editStatusUser = Joi.object({
   id: Joi.string()
