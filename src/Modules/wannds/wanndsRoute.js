@@ -9,10 +9,7 @@ let router = express.Router();
 
 router
   .route("/")
-  .get(protectedRoutes, allowedTo("admin"), wanndsController.getAll);
-
-router
-  .route("/")
+  .get(wanndsController.getAll)
   .post(
     protectedRoutes,
     allowedTo("admin"),

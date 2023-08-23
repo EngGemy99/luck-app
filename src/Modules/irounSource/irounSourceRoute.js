@@ -8,7 +8,7 @@ let router = express.Router();
 
 router
   .route("/")
-  .get(protectedRoutes, allowedTo("admin"), irounSourceController.getAll)
+  .get(irounSourceController.getAll)
   .post(
     protectedRoutes,
     allowedTo("admin"),

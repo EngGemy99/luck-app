@@ -8,7 +8,7 @@ let router = express.Router();
 
 router
   .route("/")
-  .get(protectedRoutes, allowedTo("admin"), tabJoyController.getAll)
+  .get(tabJoyController.getAll)
   .post(
     protectedRoutes,
     allowedTo("admin"),

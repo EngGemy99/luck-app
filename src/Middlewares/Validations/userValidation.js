@@ -23,3 +23,10 @@ export const deleteUser = Joi.object({
 export const updateProfile = Joi.object({
   userName: Joi.string().min(2),
 });
+export const changePassword = Joi.object({
+  password: Joi.string().min(2).required(),
+  confirmPassword: Joi.string()
+    .valid(Joi.ref("password"))
+    .required()
+    .messages({ "any.only": "confirmPassword does not match" }),
+});

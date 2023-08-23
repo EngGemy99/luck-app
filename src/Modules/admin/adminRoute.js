@@ -10,6 +10,14 @@ let router = express.Router();
 router
   .route("/")
   .get(protectedRoutes, allowedTo("admin"), adminController.allUser);
+router
+  .route("/change-password")
+  .patch(
+    protectedRoutes,
+    allowedTo("admin"),
+    validation(validators.changePassword),
+    adminController.changePassword
+  );
 
 router
   .route("/:id/edit-point")

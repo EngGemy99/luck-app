@@ -3,6 +3,7 @@ import { catchError } from "../../utils/catchAsyncError.js";
 import { userModel } from "../../../models/User.js";
 import cloudinary from "../../utils/cloudinary.js";
 import { requestModel } from "../../../models/Request.js";
+import bcrypt from "bcrypt";
 
 export const profile = catchError(async (request, response, next) => {
   let { _id } = request.user;
@@ -101,5 +102,20 @@ export const updateProfile = catchError(async (request, response, next) => {
     message: "admin profile updated successfully",
     result: user,
     status: 200,
+  });
+});
+
+export const changePassword = catchError(async (request, response, next) => {
+  const { _id } = request.user;
+  const password = request.body.password;
+  if (password) {
+    request.body.password = bcrypt.hashSync(password, 8);
+  }
+  const result = await userModel.findByIdAndUpdate(_id, request.body);
+  if (!result) {
+    return next(ErrorMessage(404, `User Not Found 😥`));
+  }
+  response.status(200).json({
+    message: "Change password successfully",
   });
 });
