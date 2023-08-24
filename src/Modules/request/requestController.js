@@ -10,6 +10,10 @@ export const withdrawalRequest = catchError(async (request, response, next) => {
   if (countPoint > request.user.points) {
     return next(ErrorMessage(404, "You Do Not Have Enough Point"));
   }
+  //! rival point for user in rejected or accepted
+  let user = await userModel.findById(request.user._id);
+  user.points -= countPoint;
+  await user.save();
   let newRequest = await requestModel.create(request.body);
   response.status(200).json({
     message: "waiting for admin approval",
@@ -43,14 +47,6 @@ export const acceptedOrCancelRequest = catchError(
       },
       { new: true }
     );
-    //! rival point for user in rejected or accepted
-    let user = await userModel.findById(updateRequest.user._id);
-    if (user.points >= updateRequest.countPoint) {
-      user.points -= updateRequest.countPoint;
-      await user.save();
-    } else {
-      return next(ErrorMessage(404, "User Do Not Have Enough Point"));
-    }
     response.status(200).json({
       message: "request updated successfully",
       updateRequest,
