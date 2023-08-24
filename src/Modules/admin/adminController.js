@@ -168,11 +168,11 @@ export const payouts = catchError(async (request, response, next) => {
             },
           },
         ],
-        year: [
+        allTime: [
           {
             $group: {
               _id: null, // Remove the $dateToString stage
-              year: { $sum: "$money" },
+              allTime: { $sum: "$money" },
             },
           },
         ],
@@ -183,11 +183,9 @@ export const payouts = catchError(async (request, response, next) => {
   result = result[0];
   for (let prop in result) {
     if (result[prop].length === 0) {
-      result[prop] = [
-        {
-          [prop]: "0",
-        },
-      ];
+      result[prop] = "0";
+    } else {
+      result[prop] = result[prop][0][prop];
     }
   }
   response.status(200).json({
