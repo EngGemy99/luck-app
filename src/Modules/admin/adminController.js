@@ -171,13 +171,8 @@ export const payouts = catchError(async (request, response, next) => {
         year: [
           {
             $group: {
-              _id: { $dateToString: { format: "%Y", date: "$createAt" } },
+              _id: null, // Remove the $dateToString stage
               year: { $sum: "$money" },
-            },
-          },
-          {
-            $match: {
-              _id: `${year}`,
             },
           },
         ],
