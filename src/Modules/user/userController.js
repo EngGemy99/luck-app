@@ -75,3 +75,30 @@ export const getUser = catchError(async (request, response, next) => {
     status: 200,
   });
 });
+
+export const watchOffers = catchError(async (request, response, next) => {
+  const { user_id, amount, payout } = request.query;
+  let user = await userModel.findByIdAndUpdate(
+    user_id,
+    {
+      $inc: {
+        points: Number(amount),
+        payout: Number(payout),
+      },
+    },
+    { new: true }
+  );
+  if (!user) return next(ErrorMessage(404, `Not Found`));
+  if (user.points < 0) {
+    user = await userModel.findByIdAndUpdate(
+      user_id,
+      { points: 0 },
+      { new: true }
+    );
+  }
+  response.status(200).json({
+    message: "Earn Point successfully",
+    user,
+    status: 200,
+  });
+});

@@ -21,6 +21,10 @@ const userSchema = mongoose.Schema(
       required: true,
       minLength: [6, "minLength 6 characters"],
     },
+    payout: {
+      type: Number,
+      default: 0,
+    },
     profilePic: {
       type: Object,
       default: {
