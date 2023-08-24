@@ -11,6 +11,9 @@ router
   .route("/")
   .get(protectedRoutes, allowedTo("admin"), adminController.allUser);
 router
+  .route("/payouts")
+  .get(protectedRoutes, allowedTo("admin"), adminController.payouts);
+router
   .route("/change-password")
   .patch(
     protectedRoutes,

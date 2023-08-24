@@ -4,6 +4,8 @@ import { userModel } from "../../../models/User.js";
 import cloudinary from "../../utils/cloudinary.js";
 import { requestModel } from "../../../models/Request.js";
 import bcrypt from "bcrypt";
+import { getLocalTime } from "../../utils/getLocalTime.js";
+import { payoutModel } from "../../../models/Payout.js";
 
 export const profile = catchError(async (request, response, next) => {
   let { _id } = request.user;
@@ -117,5 +119,83 @@ export const changePassword = catchError(async (request, response, next) => {
   }
   response.status(200).json({
     message: "Change password successfully",
+  });
+});
+
+export const payouts = catchError(async (request, response, next) => {
+  const { day, month, weekNumber, year } = getLocalTime();
+  const aggregationPipeline = [
+    {
+      $facet: {
+        day: [
+          {
+            $group: {
+              _id: {
+                $dateToString: { format: "%Y-%m-%d", date: "$createAt" },
+              },
+              day: { $sum: "$money" },
+            },
+          },
+          {
+            $match: {
+              _id: `${year}-${month}-${day}`,
+            },
+          },
+        ],
+        week: [
+          {
+            $group: {
+              _id: { $dateToString: { format: "%Y-%U", date: "$createAt" } },
+              week: { $sum: "$money" },
+            },
+          },
+          {
+            $match: {
+              _id: `${year}-${weekNumber}`,
+            },
+          },
+        ],
+        month: [
+          {
+            $group: {
+              _id: { $dateToString: { format: "%Y-%m", date: "$createAt" } },
+              month: { $sum: "$money" },
+            },
+          },
+          {
+            $match: {
+              _id: `${year}-${month}`,
+            },
+          },
+        ],
+        year: [
+          {
+            $group: {
+              _id: { $dateToString: { format: "%Y", date: "$createAt" } },
+              year: { $sum: "$money" },
+            },
+          },
+          {
+            $match: {
+              _id: `${year}`,
+            },
+          },
+        ],
+      },
+    },
+  ];
+  let result = await payoutModel.aggregate(aggregationPipeline);
+  result = result[0];
+  for (let prop in result) {
+    if (result[prop].length === 0) {
+      result[prop] = [
+        {
+          [prop]: "0",
+        },
+      ];
+    }
+  }
+  response.status(200).json({
+    result,
   });
 });

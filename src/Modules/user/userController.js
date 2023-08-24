@@ -2,6 +2,7 @@ import { ErrorMessage } from "../../utils/ErrorMessage.js";
 import { catchError } from "../../utils/catchAsyncError.js";
 import { userModel } from "../../../models/User.js";
 import cloudinary from "../../utils/cloudinary.js";
+import { payoutModel } from "../../../models/Payout.js";
 
 export const profile = catchError(async (request, response, next) => {
   let { _id } = request.user;
@@ -83,22 +84,46 @@ export const watchOffers = catchError(async (request, response, next) => {
     {
       $inc: {
         points: Number(amount),
-        payout: Number(payout),
       },
     },
     { new: true }
   );
   if (!user) return next(ErrorMessage(404, `Not Found`));
-  if (user.points < 0) {
-    user = await userModel.findByIdAndUpdate(
-      user_id,
-      { points: 0 },
-      { new: true }
-    );
-  }
+  await payoutModel.create({
+    user: user_id,
+    money: payout,
+  });
   response.status(200).json({
     message: "Earn Point successfully",
     user,
     status: 200,
   });
 });
+
+// ! for testing
+// export const watchOffers = catchError(async (request, response, next) => {
+//   const { user_id, amount, payout } = request.query;
+//   let user = await userModel.findByIdAndUpdate(
+//     user_id,
+//     {
+//       $inc: {
+//         points: Number(amount),
+//         payout: Number(payout),
+//       },
+//     },
+//     { new: true }
+//   );
+//   if (!user) return next(ErrorMessage(404, `Not Found`));
+//   if (user.points < 0) {
+//     user = await userModel.findByIdAndUpdate(
+//       user_id,
+//       { points: 0 },
+//       { new: true }
+//     );
+//   }
+//   response.status(200).json({
+//     message: "Earn Point successfully",
+//     user,
+//     status: 200,
+//   });
+// });

@@ -21,7 +21,7 @@ const userSchema = mongoose.Schema(
       required: true,
       minLength: [6, "minLength 6 characters"],
     },
-    payout: {
+    points: {
       type: Number,
       default: 0,
     },
@@ -37,10 +37,6 @@ const userSchema = mongoose.Schema(
       type: String,
       default: "user",
       enum: ["admin", "user"],
-    },
-    points: {
-      type: Number,
-      default: 0,
     },
     status: {
       type: String,
