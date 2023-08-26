@@ -1,17 +1,28 @@
 import { offersModel } from "../../../models/Offers.js";
+import { ApiFeature } from "../../utils/ApiFeature.js";
 import { ErrorMessage } from "../../utils/ErrorMessage.js";
 import { catchError } from "../../utils/catchAsyncError.js";
 import cloudinary from "../../utils/cloudinary.js";
 
 export const topOffers = catchError(async (request, response, next) => {
-  let result = await offersModel.find({ offerType: "topOffer" });
+  let apiFeature = new ApiFeature(
+    offersModel.find({ offerType: "topOffer" }),
+    request.query
+  ).filter();
+  //? execute query
+  let result = await apiFeature.mongooseQuery;
   response.status(200).json({
     result,
     status: 200,
   });
 });
 export const offersWall = catchError(async (request, response, next) => {
-  let result = await offersModel.find({ offerType: "offersWall" });
+  let apiFeature = new ApiFeature(
+    offersModel.find({ offerType: "offersWall" }),
+    request.query
+  ).filter();
+  //? execute query
+  let result = await apiFeature.mongooseQuery;
   response.status(200).json({
     result,
     status: 200,

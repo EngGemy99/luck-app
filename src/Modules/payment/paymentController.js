@@ -2,9 +2,12 @@ import { ErrorMessage } from "../../utils/ErrorMessage.js";
 import { catchError } from "../../utils/catchAsyncError.js";
 import cloudinary from "../../utils/cloudinary.js";
 import { paymentModel } from "../../../models/Payment.js";
+import { ApiFeature } from "../../utils/ApiFeature.js";
 
 export const getAllPayment = catchError(async (request, response, next) => {
-  let paymentWays = await paymentModel.find();
+  let apiFeature = new ApiFeature(paymentModel.find(), request.query).filter();
+  //? execute query
+  let paymentWays = await apiFeature.mongooseQuery;
   response.status(200).json({
     paymentWays,
     status: 200,
